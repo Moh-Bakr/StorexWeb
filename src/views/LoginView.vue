@@ -18,10 +18,7 @@ async function LoginHandler() {
  response = JSON.parse(response);
 
  if (response.status == "success") {
-  localStorage.setItem(
-   "token",
-   response.authorisation.type + " " + response.authorisation.token
-  );
+  localStorage.setItem("token", "Bearer " + " " + response.authorisation.token);
   router.push({ name: "home" });
  } else {
   state.error = response.message;
