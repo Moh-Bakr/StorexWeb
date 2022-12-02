@@ -1,5 +1,5 @@
 <script setup>
-import { destory } from '../helper/CrudHelper';
+import { destory } from '../helper/MovieHelper';
 import { reactive } from 'vue';
 import router from '../router';
 
@@ -11,9 +11,9 @@ let state = reactive({
 });
 
 function deleteHandler() {
-   // props.data.id
-   destory(5).then((response) => {
-      if (response.response.data.status == 'success') {
+   destory(props.data.id).then((response) => {
+      console.log(response.status);
+      if (response.status == 'success') {
          router.push({ name: "home" });
       }
       else {

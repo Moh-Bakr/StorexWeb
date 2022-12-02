@@ -9,26 +9,52 @@ export default async function index() {
          'Authorization': localStorage.getItem('token'),
       }
    };
-
+   
    let res = axios(config)
       .then(function (response) {
-         // console.log(response.data);
          return response.data;
       })
       .catch(function (error) {
          return error;
       });
-
+   
    return res;
 }
 
 export async function create(body) { }
-export async function update(body) { }
+
+export async function update(body, id) {
+   var data = new FormData();
+   let file = document.querySelector("input[type=file]");
+   data.append("image", file.files[0]);
+   data.append('name', body.name);
+   data.append('description', body.description);
+   data.append('category_id', body.category_id);
+   data.append('_method', 'put');
+   
+   var config = {
+      method: 'post',
+      url: 'movies/' + id,
+      headers: {
+         'Authorization': localStorage.getItem('token'),
+      },
+      data: data
+   };
+
+   let res = axios(config)
+      .then(function (response) {
+         console.log(JSON.stringify(response.data));
+      })
+      .catch(function (error) {
+         console.log(error);
+      });
+   
+   return res;
+}
 
 export async function destory(body) {
    var data = new FormData();
    data.append('_method', 'delete');
-      console.log(body);
    var config = {
       method: 'post',
       url: 'movies/' + body,

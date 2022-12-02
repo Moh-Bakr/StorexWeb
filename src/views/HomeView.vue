@@ -1,17 +1,17 @@
 <script setup>
 import { onMounted, reactive } from "vue";
-import index from "../helper/CrudHelper";
+import index from "../helper/MovieHelper";
 import Card from "../components/Card.vue";
 import Modal from "../components/Modal.vue";
 import axios from "axios";
 
-const state = reactive({ movies: [], show: "" });
+const state = reactive({ movies: [], show: "", Modaldata: "" });
 onMounted(() => {
  if (localStorage.getItem("token") != undefined) {
   let response = index().then((response) => {
    state.movies = response.message;
   });
-  console.log(state.movies);
+//   console.log(state.movies);
  } else {
   router.push({ name: "login" });
  }
@@ -19,9 +19,9 @@ onMounted(() => {
 function hideModal() {
  state.show = false;
 }
-function show() {
+function show(data) {
+ state.Modaldata = data;
  state.show = true;
- console.log("Show");
 }
 </script>
 
@@ -31,7 +31,7 @@ function show() {
    <Card v-if="item.image" @show="show" :data="item" />
   </section>
 
-  <Modal @hide="hideModal" v-if="state.show" />
+  <Modal @hide="hideModal" :data="state.Modaldata" v-if="state.show" />
  </div>
 </template>
 

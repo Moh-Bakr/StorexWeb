@@ -9,14 +9,14 @@ const state = reactive({
  error: "",
 });
 
-async function LoginHandler() {
+async function loginHandler() {
  let body = {
   email: state.email,
   password: state.password,
  };
  let response = await login(body);
  response = JSON.parse(response);
-
+ 
  if (response.status == "success") {
   localStorage.setItem("token", "Bearer " + " " + response.authorisation.token);
   router.push({ name: "home" });
@@ -29,7 +29,7 @@ async function LoginHandler() {
 
 <template>
  <h1>Login</h1>
- <form @submit.prevent="LoginHandler">
+ <form @submit.prevent="loginHandler">
   <div class="form-control">
    <label class="label" for="email">Email</label>
    <input type="email" id="email" v-model="state.email" />
