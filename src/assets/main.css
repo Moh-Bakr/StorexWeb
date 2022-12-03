@@ -1,19 +1,19 @@
-@import './base.css';
+@import "./base.css";
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  /* max-width: 1280px; */
+  /* margin: 0 auto; */
+  /* padding: 2rem; */
 
   font-weight: normal;
 }
 
-a,
+/* a,
 .green {
   text-decoration: none;
   color: hsla(160, 100%, 37%, 1);
   transition: 0.4s;
-}
+} */
 
 @media (hover: hover) {
   a:hover {
@@ -22,14 +22,89 @@ a,
 }
 
 @media (min-width: 1024px) {
-  body {
+  /* body {
     display: flex;
     place-items: center;
-  }
+  } */
 
-  #app {
+  /* #app {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+    grid-template-columns: 1fr;
+    padding: 0;
+  } */
+}
+
+input[type="submit"] {
+  background-color: #717de6;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 1rem;
+  width: 100%;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+label {
+  color: #717de6;
+  font-weight: bold;
+  margin-bottom: 0.1rem;
+  display: inline-block;
+  width: 100%;
+}
+
+input {
+  margin: 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #717de6;
+}
+
+input[type="submit"]:hover {
+  background-color: #662fe6;
+}
+
+.form-control {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #777;
+}
+
+form {
+  padding: 2rem;
+  width: 30%;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.2);
+  border: 1px solid #ccc;
+}
+
+.form-container {
+  background: linear-gradient(120deg, #717de6, #b724e0);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
