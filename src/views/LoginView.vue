@@ -16,9 +16,10 @@ async function loginHandler() {
  };
  let response = await login(body);
  response = JSON.parse(response);
- 
+
  if (response.status == "success") {
-  localStorage.setItem("token", "Bearer " + " " + response.authorisation.token);
+  localStorage.setItem("token", "Bearer " + " " + response.authorization.token);
+  alert("Login Success");
   router.push({ name: "home" });
  } else {
   state.error = response.message;
@@ -28,29 +29,18 @@ async function loginHandler() {
 </script>
 
 <template>
- <h1>Login</h1>
- <form @submit.prevent="loginHandler">
-  <div class="form-control">
-   <label class="label" for="email">Email</label>
-   <input type="email" id="email" v-model="state.email" />
-  </div>
-  <div class="form-control">
-   <label class="label" for="password">Password</label>
-   <input type="password" id="password" v-model="state.password" />
-  </div>
-  <input type="submit" value="Login" class="btn" />
- </form>
+ <div class="form-container">
+  <form @submit.prevent="loginHandler">
+   <h1>Login</h1>
+   <div class="form-control">
+    <label class="label" for="email">Email</label>
+    <input type="email" id="email" v-model="state.email" />
+   </div>
+   <div class="form-control">
+    <label class="label" for="password">Password</label>
+    <input type="password" id="password" v-model="state.password" />
+   </div>
+   <input type="submit" value="Login" class="btn" />
+  </form>
+ </div>
 </template>
-
-
-<style scoped>
-.center {
- text-align: center;
-}
-.form-control {
- margin: 1rem 0;
-}
-.label {
- display: block;
-}
-</style>
