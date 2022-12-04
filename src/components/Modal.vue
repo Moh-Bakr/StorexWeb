@@ -1,76 +1,143 @@
 <script setup>
 import { onMounted } from "@vue/runtime-core";
-import { reactive } from "vue";
-import {update} from "../helper/MovieHelper";
+import { reactive ,defineEmits} from "vue";
+import { updateMovie, createMovie } from "../helper/MovieHelper";
 import index from "../helper/CategoryHelper";
 
 const props = defineProps(["data"]);
+const emit = defineEmits(["hide"]);
 const state = reactive({
- categories: [],
- name: props.data.name,
+ categories: props.data.categories,
+ title: props.data.title,
  description: props.data.description,
  category: props.data.category_id,
  image: props.data.image,
+ action: props.data.action,
 });
 
-let response = index().then((response) => {
-   state.categories = response.message;
-});
-
-
-function updateHandler() {
-   let body = {
-      name: state.name,
-      description: state.description,
-      category_id: state.category,
-      image: state.image,
-   };
-   update( body,props.data.id).then((response) => {
-      console.log(response);
-   });
+function handler() {
+ let body = {
+  title: state.title,
+  description: state.description,
+  category_id: state.category,
+  image: state.image,
+ };
+ if (state.action == "Edit")
+   updateMovie(body, props.data.id).then((response) => {
+    // console.log(response);
+    emit('hide')
+  });
+ else
+  createMovie(body).then((response) => {
+    emit('hide')
+  });
 }
-   
 </script>
 <template>
  <div class="modal">
   <div id="alert" v-if="state.alert">{{ state.alert }}</div>
-  <h1 @click="$emit('hide')">X</h1>
-  <h1>Edit</h1>
-  <form @submit.prevent="updateHandler">
+  <form @submit.prevent="handler">
+   <section class="modal-header">
+    <h1>{{ state.action }}</h1>
+    <span @click="$emit('hide')">X</span>
+   </section>
    <label>
     Name:
-    <input type="text" v-model="state.name" />
+    <input type="text" v-model="state.title" />
    </label>
    <label>
     Description:
-    <input type="text" v-model="state.description" />
+    <textarea v-model="state.description" rows="6" />
    </label>
    <label>
-    Image:
-    <input type="file" ref="img" name="img"  />
-
-    <!-- <img :src="'https://test-api.storexweb.com/' + state.image" /> -->
-   </label>
-   <label>
-    category:
+    Category:
     <select v-model="state.category">
      <option v-for="cat in state.categories" :value="cat.id" :key="cat.id">
       {{ cat.name }}
      </option>
     </select>
    </label>
+   <label>
+    Image:
+    <input type="file" ref="img" name="img" />
+   </label>
 
-   <button type="submit">Edit</button>
+   <button type="submit">{{ state.action }}</button>
   </form>
  </div>
 </template>
 <style scoped>
+span {
+ font-size: 20px;
+ cursor: pointer;
+ font-weight: bold;
+}
 .modal {
  position: fixed;
- top: 25%;
- right: 25%;
- width: 50%;
- height: 50%;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ top: 0;
+ left: 0;
+ width: 100vw;
+ height: 100vh;
+ border-radius: 10px;
+ z-index: 100;
+}
+
+form {
+ width: 550px;
+}
+
+textarea {
+ resize: none;
+}
+
+h1 {
+ font-size: 1.75rem;
+ line-height: 30px;
+}
+.modal::before {
+ content: "";
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 100%;
+ height: 100%;
+ background: rgba(0, 0, 0, 0.5);
+ z-index: -1;
+}
+
+img {
+ width: 150px;
+ height: 200px;
+ border-radius: 5px;
+}
+
+.modal-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: flex-start;
+}
+
+select {
+ width: 100%;
+ padding: 5px;
+ border-radius: 5px;
  background: white;
+ border: 1px solid #ccc;
+ outline: none;
+}
+
+select option {
+ font-size: 15px;
+}
+
+button {
+ margin-top: 20px;
+ font-weight: bold;
+ font-size: 18px;
+ width: 100%;
+ background: #00f;
 }
 </style>
