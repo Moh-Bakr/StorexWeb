@@ -1,5 +1,4 @@
 <script setup>
-import { destory } from "../helper/MovieHelper";
 import { reactive } from "vue";
 import router from "../router";
 
@@ -8,13 +7,19 @@ const props = defineProps(["data"]);
 let state = reactive({
  alert: "",
 });
+
+
+function logout() {
+   localStorage.removeItem("token");
+   router.push({ name: "login" });
+}
 </script>
 
 <template>
  <div class="navbar">
   <h2 class="logo">Storexweb</h2>
   <button @click="$emit('show')" class="create">Create</button>
-  <button class="logout">Logout</button>
+  <button class="logout" @click="logout">Logout</button>
  </div>
 </template>
 
