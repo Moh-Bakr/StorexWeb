@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default async function index() {
+export default async function getCategories() {
    var config = {
       method: 'get',
       url: 'category',
