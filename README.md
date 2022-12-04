@@ -1,29 +1,18 @@
-# Frontend
+### Website URL
 
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+```
+https://storexweb.netlify.app/
 ```
 
-### Compile and Hot-Reload for Development
+## About The Application
 
-```sh
-npm run dev
-```
+front-end application that contains:
 
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+- If the user is not logged-in, redirect him/her to the login page
+- If the user does not have an account, he/she can navigate to a register page
+- The user can’t view any page without authentication
+- On the main page show a list of all movies
+- The user can create a new movie
+- The user can edit any movie on the website
+- The user can delete any movie on the website
+- The user can browse movies by category
