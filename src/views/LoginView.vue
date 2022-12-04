@@ -1,6 +1,6 @@
 <script setup>
 import { login } from "../helper/AuthHelper";
-import { reactive } from "vue";
+import { reactive, onMounted } from "vue";
 import router from "../router";
 
 const state = reactive({
@@ -8,6 +8,12 @@ const state = reactive({
  password: "",
  error: "",
 });
+
+onMounted(()=>{
+   if(localStorage.getItem("token") != undefined){
+   router.push({name: "home"})
+   }
+})
 
 async function loginHandler() {
  let body = {
@@ -19,7 +25,6 @@ async function loginHandler() {
 
  if (response.status == "success") {
   localStorage.setItem("token", "Bearer " + " " + response.authorization.token);
-  alert("Login Success");
   router.push({ name: "home" });
  } else {
   state.error = response.message;
@@ -41,6 +46,9 @@ async function loginHandler() {
     <input type="password" id="password" v-model="state.password" />
    </div>
    <input type="submit" value="Login" class="btn" />
+   <div class="link">
+      <p>Don't have an account? <RouterLink to="/register">Register</RouterLink></p>
+   </div>
   </form>
  </div>
 </template>
