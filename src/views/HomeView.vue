@@ -39,9 +39,11 @@ onMounted(() => {
   router.push({ name: "login" });
  }
 });
+
 function hideModal() {
  state.show = false;
 }
+
 function show(data) {
  state.Modaldata = {
   ...data,
@@ -53,11 +55,17 @@ function show(data) {
 
 function deleteHandler(id) {
  deleteMovie(id).then((response) => {
-  console.log(response.status);
   const position = state.movies.findIndex((movie) => movie.id == id);
   state.movies.splice(position, 1);
  });
 }
+
+function refatch() {
+ getMovies().then((response) => {
+  state.movies = response.data;
+ });
+}
+
 </script>
 
 <template>
@@ -94,7 +102,7 @@ function deleteHandler(id) {
    <Card v-if="item.image" @show="show" :data="item" @delete="deleteHandler" />
   </section>
 
-  <Modal @hide="hideModal" :data="state.Modaldata" v-if="state.show" />
+  <Modal @hide="hideModal" @refatch="refatch" :data="state.Modaldata" v-if="state.show" />
  </div>
 </template>
 

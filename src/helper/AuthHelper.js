@@ -17,7 +17,7 @@ export default async function register(body) {
    
    let res = axios(config)
       .then(function (response) {
-         return JSON.stringify(response.data);
+         return response.data;
       })
       .catch(function (error) {
          return error;
@@ -42,7 +42,7 @@ export async function login(body) {
    
    let res = axios(config)
       .then(function (response) {
-         return JSON.stringify(response.data);
+         return response.data;
       })
       .catch(function (error) {
          return error;

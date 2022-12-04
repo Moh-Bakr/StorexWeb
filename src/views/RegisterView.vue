@@ -8,6 +8,7 @@ const state = reactive({
  email: "",
  password: "",
  error: "",
+ alert: "",
 });
 
 onMounted(() => {
@@ -22,13 +23,12 @@ async function registerHandler() {
   email: state.email,
   password: state.password,
  };
+ state.alert = "";
  let response = await register(body);
- response = JSON.parse(response);
  if (response.status == "success") {
   router.push({ name: "login" });
  } else {
-  state.error = response.message;
-  console.log(state.error);
+  state.alert = "Email already exists";
  }
 }
 </script>
@@ -39,20 +39,21 @@ async function registerHandler() {
    <h1>Register</h1>
    <div class="form-control">
     <label class="label" for="name">Name</label>
-    <input type="name" id="name" v-model="state.name" />
+    <input type="name" id="name" v-model="state.name" required />
    </div>
    <div class="form-control">
     <label class="label" for="email">Email</label>
-    <input type="email" id="email" v-model="state.email" />
+    <input type="email" id="email" v-model="state.email" required />
    </div>
    <div class="form-control">
     <label class="label" for="password">Password</label>
-    <input type="password" id="password" v-model="state.password" />
+    <input type="password" id="password" v-model="state.password" required />
    </div>
    <input type="submit" value="Register" class="btn" />
    <div class="link">
-      <p>Already have an account? <RouterLink to="/login">Login</RouterLink></p>   
+    <p>Already have an account? <RouterLink to="/login">Login</RouterLink></p>
    </div>
+   <p class="error" v-if="state.alert">{{ state.alert }}</p>
   </form>
  </div>
 </template>

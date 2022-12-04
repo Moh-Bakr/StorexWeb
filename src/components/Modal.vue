@@ -1,11 +1,11 @@
 <script setup>
 import { onMounted } from "@vue/runtime-core";
-import { reactive ,defineEmits} from "vue";
+import { reactive, defineEmits } from "vue";
 import { updateMovie, createMovie } from "../helper/MovieHelper";
 import index from "../helper/CategoryHelper";
 
 const props = defineProps(["data"]);
-const emit = defineEmits(["hide"]);
+const emit = defineEmits(["hide", "refatch"]);
 const state = reactive({
  categories: props.data.categories,
  title: props.data.title,
@@ -23,13 +23,15 @@ function handler() {
   image: state.image,
  };
  if (state.action == "Edit")
-   updateMovie(body, props.data.id).then((response) => {
-    // console.log(response);
-    emit('hide')
+  updateMovie(body, props.data.id).then((response) => {
+   // console.log(response);
+   emit("hide");
+   emit("refatch");
   });
  else
   createMovie(body).then((response) => {
-    emit('hide')
+   emit("hide");
+   emit("refatch");
   });
 }
 </script>
@@ -43,15 +45,15 @@ function handler() {
    </section>
    <label>
     Name:
-    <input type="text" v-model="state.title" />
+    <input type="text" v-model="state.title" required />
    </label>
    <label>
     Description:
-    <textarea v-model="state.description" rows="6" />
+    <textarea v-model="state.description" rows="6" required />
    </label>
    <label>
     Category:
-    <select v-model="state.category">
+    <select v-model="state.category" required>
      <option v-for="cat in state.categories" :value="cat.id" :key="cat.id">
       {{ cat.name }}
      </option>
